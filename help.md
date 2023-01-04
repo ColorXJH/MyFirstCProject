@@ -38,5 +38,28 @@
 > 他们都叫做函数
 
 ### chapter3:数据和C
+- 计算机得存储方式
+> 整数类型和浮点数类型 int long short unsigned signed void char float double _Bool _Complex _Imaginary
+- unsigned与signed的区别
+> unsigned用于表示无符号位数据，其将符号位化为二进制，用于非负值的场合，标识的数值比有符号位要大
+> 同时signed强调使用有符号类型的意图：比如：short   short int    signed short int     signed short都表示的是同一种类型
+> 其他辅助int类型的比如 long int / long long int
+- 为什么使用多种整数类型
+> C语言规定short占用的存储空间不能比int多，long占用的存储空间不能比int少
+> 现代计算机最常见的设置是long long占用64位，long占用32位，short占用16位，int占用16、32位，依据计算机的自然字长而定
+> l/L后缀表示long类型 ll/LL后缀表示long long类型，可以用作10，8，16这些不同进制的整数
+> u/U后缀表示unsigned long long 例如：5ull 8llu 11ULL 7LLU
+- 打印short、long、long long和unsigned类型
+> 打印unsigned int类型使用%u,打印long类型的使用%ld,%lx表示以16进制格式打印long类型
+> %lo表示以8进制格式打印long类型整数
+> 对于short类型，%hd表示以10进制显示short类型整数，%ho表示以8进制显示，%hx
+> h和l前缀都可以和u一起使用，用于表示无符号类型，例如：%lu表示打印unsigned long类型
+> %llu,%lld分别表示无符号，有符号 long long类型数据
+> 虽然C允许使用大写或小写的常量后缀，但是在转换说明中只能用小写(格式化响应类型数据时可以使用规则内的大小写切换)
+> 例如L/l 0x/0X 
+- 字符常量
+> 在C语言中，用单引号括起来的单个字符被称为字符常量,双引号括起来的成为字符串
+> 实际上，字符是以数值形式储存的，所以也可使用数字代码值来赋值
+> char grade = 'A';==》char grade = 65
 
 
