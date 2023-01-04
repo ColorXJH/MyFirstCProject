@@ -13,8 +13,12 @@ int main(void){
     test();
     int x='ABCD';
     char ch='ABCD';
-    char beep=7;
+    char beep='\a';
     printf("beep is %hd\n",beep);
+    char nm=4;
+    char nmm='4';
+    printf("Hello!\007\n");//将打印Hello!并发出一声蜂鸣
+    printf("nm= %hd and nmm= %hd\n",nm,nmm);
     printf("x is %d\n",x);
     printf("ch is %hd\n",ch);//D
     return 0;
