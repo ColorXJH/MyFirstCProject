@@ -72,4 +72,59 @@
 > 这样，无论编译器默认char是什么类型，signed  char表示有符号类型，
 > 而unsigned  char表示无符号类型。这在用char类型处理小整数时很有用。
 > 如果只用char处理字符，那么char前面无需使用任何修饰符。
-
+- float,double,long double
+> c语言规定float类型必须至少能够表示6位有效数字，且取值范围至少是10 -37 ～10 +37
+> double类型浮点数为双精度数，他和float最小取值范围相同，但是至少必须能表示10位有效数字
+> 一般情况下double占用64位而不是32位
+- 浮点数常量
+> 浮点型常量得基本形式是：有符号得数字（包括小数点），后面紧跟e/E,最后是一个有符号数表示10的指数
+> -2.1E+12   2.334e3 2.3    2.   .3  .4e-6   
+> 正号可以省略，可以没有小数点或指数部分，但不能同时省略两者，可以省略小数或整数部分，但不能同时省略2者
+- 打印浮点数值
+> %f 打赢十进制计数法浮点数  %e打印指数计数法浮点数  %a，%A打印16进制
+> 打印long double需要使用%Lf %Le %La
+- 浮点数的上溢和下溢
+> 当计算导致数字过 大，超过当前类型能表达的范围时，就会发生上溢,
+> C语言规定，在这种情况下会赋一个表示无穷大的特定值，而且printf()显示该值为inf或infinity
+> float类型的数以指数和尾数部分来储存,假设存在一个最小的浮点数，即指数部分是最小值，其他的全部位数表示最小的位数值
+> 现在将该值除以2，理论上这个操作会减小指数值，，但是指数值已经是最小的了，计算机只能将后面的尾数值向右位移一位，左边
+> 空出一个二进制位，并丢弃最右边的一位二进制数，虽然得到了结果，
+> 但是在计算过程中却损失了原末尾有效位上的数字。这种情况叫 作下溢（underflow）
+> 因此，把最小的正浮点数除以 2将得到一个低于正常的值。如果除以一个非常大的值，会导致所有的位都为0
+- 复数和虚数类型
+> 简而言之，C语言有三种复数类型：float_Complex,double_Complex,long double_Complex
+> 例如，float _Complex类型的变量应包含两个float类型的值，分别表示复数的实部和虚部
+> C语言的三种虚数类型：float_Imaginary,double_Imaginary,long double_Imaginary
+- 小结：基本数据类型
+```
+ 关键字：
+  基本数据类型由11个关键字组成：int,long,char,short,unsigned,float,double,signed
+  _Bool,_Complex,_Imaginary
+ 有符号整形：
+  有符号整形可以表示正整数和负整数
+  int->系统给定的基本整数类型，C语言规定int类型不小于16位
+  short/short int->最大的short类型整数小于或等于最大的int类型整数，C语言规定short类型至少占16位
+  long/long int->该类型表示的整数大于或等于最大的int类型整数,long至少占32位
+  long long/long long int->该类型可表示的整数大于或等于最大的long型整数，long long至少占64位
+  一般而言：long类型占用的内存比short大，int类型的宽度要么和long相同，要么和short相同，旧DOS系统的PC提供16位的
+  short和int，以及32位的long；Windows 95系统提供16位的short以及32位的int和long
+ 无符号型：
+  无符号整形只能表示正数和零，因此可表示的正整数要比有符号的大，在整形类型前面加上unsigned即可
+ 字符类型：
+  可打印出来的符号都是字符，char类型表示一个字符需要占用一个字节内存，处于历史原因，一个字节通常是8位，但是如果要表示基本字符
+  也可以是16位或者更大
+  char->字符类型的关键字，有些编译器使用有符号的char,有些使用无符号的char,在需要是可以明确定义 signed unsigned
+ 布尔类型：
+  true/false C语言使用1表示true,0表示false
+  _Bool->布尔类型的关键字，是无符号的int类型，占用的空间只要能存储0、1即可
+ 实浮点类型：
+  表示正浮点数和负浮点数，float->系统的基本浮点类型，可精确表示至少6位有效数字
+  double->存储浮点数的范围更大，能表示比float类型更多的有效数字（至少10位，通常更多）和更大的指数
+  long long->存储浮点数的范围可能比double更大，能表示比double更多的有效数字和更大的指数
+ 复数和虚数浮点数
+  虚数类型是可选的，复数的实部和虚部类型都是基于实浮点数来构建的
+  float_Complex,double_Complex,long double_Complex
+  float_Imaginary,double_Imaganiary,long double_Imaginary  
+  
+  
+```
