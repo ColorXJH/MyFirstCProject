@@ -125,6 +125,19 @@
   虚数类型是可选的，复数的实部和虚部类型都是基于实浮点数来构建的
   float_Complex,double_Complex,long double_Complex
   float_Imaginary,double_Imaganiary,long double_Imaginary  
-  
-  
+  小结：如何声明简单变量
+  1：选择需要的类型
+  2：使用有效的字符给变量起一个名字
+  3：按照以下格式声明：
+    类型说明符 变量名；
+    说明符由一个或多个关键字组成
+      unsigned int errs;
+  4：可以同时声明多个同类型变量，用逗号分割变量名，如下所示：
+    char chs,intss,ans;
+  5：在声明的同时还可以初始化变量：
+     float mass=3.14E12
 ```
+- 刷新输出
+> printf()何时将输出发送到屏幕上？最初printf()语句将输出发送到一个叫做缓冲区（buffer）的
+> 中间存储区域，然后缓冲区的内容再不断发送到屏幕上，C标准规定，缓冲区满，遇到换行字符串或者需要输入的时候
+> 需要刷新缓冲区（从缓冲区把数据发送到屏幕或文件），还有一种方法就是使用刷新函数fflush()

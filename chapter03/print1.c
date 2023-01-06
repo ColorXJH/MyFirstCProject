@@ -10,7 +10,7 @@ int main(void){
     printf("doing it wrong: ");
     printf("%d minus %d is %d\n",ten);//遗漏两个参数
     printf("%d - %o - %x\n",10,010,0x10);//10 - 10 - 10
-    printf("%d - %#o - %#x -%#X\n",10,10,10,10);//10 - 012 - 0xa -0XA(十六进制0-9 ABCDEF（abcdef）标识10-15)
+    printf("%d - %#o - %#x -%#X -%x\n",10,10,10,10,10);//10 - 012 - 0xa -0XA(十六进制0-9 ABCDEF（abcdef）标识10-15)
     //0x,0X并没有什么不同，只是大小写得问题
     return 0;
 }
