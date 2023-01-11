@@ -14,6 +14,7 @@ int main(void){
     printf("result:%d-%.2f-%s*\n",age,assert,pet);
     //除了%c,其他转换说明都会自动跳过输入值前面的所有空白，因此，scanf("%d%d",&n,&m)与scanf("%d   %d",&n,&m)的行为相同
     //scanf("%c",&ch)从输入中的第一个字符开始读取,scanf(" %c",&ch)从第一个非空白字符串开始读取
+    printf("The double type is %zd bytes..\n", sizeof(double));
     return 0;
 }
 
