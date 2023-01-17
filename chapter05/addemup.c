@@ -10,6 +10,13 @@ int main(void){
         sum=sum+count;
     }
     printf("sum=%d\n",sum);//表达式语句
+    float a,b;
+    int x;
+    x=b=12.33;
+    a=1.2;
+    printf("%d\n",x);
+    printf("%d\n",1.2);
+    printf("%d",a);
     return 0;//跳转语句
 }
 
