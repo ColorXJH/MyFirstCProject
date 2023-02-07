@@ -286,3 +286,18 @@
 > continue还可用作占位符,与其循环中不写任何内容，不如协商continue
 > 通常情况下，把if的测试条件的关系反过来便可避免使用continue
 - break
+> 通常用来推出循环和选择
+- 多重选择：switch/break
+> 他是if elseif else的变体，用于多重选择
+> break语句可用于循环和switch语句，但是continue只能用于循环中，如果switch在一个循环中
+> 则可以使用continue,C语言中的switch圆括号中的值必须是一个整数值，包括char类型 (整形表达式)
+- 多重标签
+> 在switch中可以使用多个case,省略其中的break表示顺序执行,执行其中一个之后无需判断另一个,直接执行(因为其中没有break语句)
+- switch一般注解
+> 程序根据expression的值跳转至相应的case标签处。然后，执行剩下的所有语句，除非执行到break语句进行重定向。
+> expression和case标签都必须是整数值（包括char类型），标签必须是常量或完全由常量组成的表达式。
+> 如果没有case标签与expression的值匹配，控制则转至标有default的语句（如果 有的话）；
+> 否则，将转至执行紧跟在switch语句后面的语句。
+- goto
+> goto part2;
+> part2:printf("this is goto statement\n")
