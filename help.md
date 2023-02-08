@@ -301,3 +301,7 @@
 - goto
 > goto part2;
 > part2:printf("this is goto statement\n")
+
+### chapter8: 字符输入/输出和输入验证
+- 单字符IO:getchar()和putchar()
+> 每次只处理一个字符，
