@@ -5,7 +5,7 @@
 int int_min(int,int);
 int main(void){
     int a,b;
-    printf("enter a pair of integer:\n");
+    printf("enter a pair of integer :\n");
     while(scanf("%d %d",&a,&b)==2){
         printf("the less integer of those is :%d\n",a,b, int_min(a,b));
         printf("enter a pair of integer(q to quit).\n");
