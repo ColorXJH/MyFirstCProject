@@ -361,4 +361,15 @@
   序中妥善处理。
 ```
 ### chapter9: 函数
-- 函数的定义
+- 递归
+> 最简单的递归形式是把递归调用置于函数的末尾，即正好在 return 语句之前。
+> 这种形式的递归被称为尾递归（tail recursion），因为递归调用在函数的末尾。
+> 尾递归是最简单的递归形式，因为它相当于循环
+> 递归如果循环次数过多则会创建大量的变量（呈指数倍增长）
+- 编译多源文件代码程序
+> unix: cc file1.c file2.c 生成a.out文件，同时还生成file1.o file2.o目标文件
+> 如果只改变file1.c 则合并：cc file1.c file2.o
+> linux:gcc file1.c fil2.c   gcc file1.c file2.o
+> windows:类似linux
+- 查找地址：&运算符
+> 
