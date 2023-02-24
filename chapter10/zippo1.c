@@ -30,4 +30,4 @@ int main(void){
     printf("*(*(zippo+2)+1)=%d\n",*(*(zippo+2)+1));
     return 0;
 }
-
+//该输出显示了二维数组zippo的地址和一维数组zippo[0]的地址相同，他们的地址都是数组元素的首地址，因此与&zippo[0][0]
