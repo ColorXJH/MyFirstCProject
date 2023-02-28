@@ -27,6 +27,10 @@ int main(void){
     sum_rows(junk,ROWS);
     sum_cols(junk,ROWS);
     printf("sum of all element =%d\n", sum2d(junk,ROWS));
+    int grid[30][100]={{1,2}};
+    //（grid[0]是int类型元素grid[0][0]的地址，grid是内含100个元素的grid[0]数组的地址。grid==》grid[0]（grid[0]是内含一百个int值的数组）,求他的指针
+    //这两个地址的数值相同，但是类型不同，可以用强制类型转换把它们转换成相同的类型。
+    printf("%p --%p --%p\n",&grid[0][0],grid[0],(int *) grid);//grid ==(int *) grid 类型转换了，指针的指针，转换成了指针
     return 0;
 }
 
