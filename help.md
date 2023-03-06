@@ -814,3 +814,38 @@ _：表示空格字符
 > sprintf()函数声明在stdio.h中，而不是在string.h中。该函数和printf()类 似，
 > 但是它是把数据写入字符串，而不是打印在显示器上。因此，该函数可以把多个元素组合成一个字符串。
 > sprintf()的第1个参数是目标字符串的地址。其余参数和printf()相同，即格式字符串和待写入项的列表。
+> sprintf()函数获取输入，并将其格式化为标准形式，然后把格式化后的字符串存储在第一个参数内
+- 其他字符串函数
+```
+1:char *strcpy(char* s1,const char * restrict s2);//把s2指向的字符串包括空字符拷贝至s1指向的位置，返回s1
+2:char *strncpy(char *s1,const char *s2,size_t n);//将s2指向的字符拷贝至s1指定的位置，拷贝的字符数不超过n,返回s1,
+3:char *strcat(char *s1,const char *s2);//将s2拷贝到s1指向的字符串末尾，覆盖空字符，返回s1
+4:char *strncat(char *s1,const char *s2,size_t n);//将s1添加至s2末尾，覆盖末尾空字符，并添加一个空字符，该函数返回s1
+5:int strcmp(const char *s1,const char *s2);//比较字符串，s1-s2,s1,s2是在机器中的编码序列
+6:int strncmp(const char *s1,const char *s2,size_t n);//与上方类似，比较前n个或者遇到空字符停止比较
+7:char *strchr(const char *s,int c);//如果s字符串包含字符c,该函数返回指向s的指针，未找到返回空指针
+8:char *strbpbrk(const char* s1,const char* s2);//如果s1包含s2中的任意字符，则返回指向s1位置的指针
+9:char *strstr(const char *s1,const char* s2);//返回指向s1字符串中s2字符串出现的首位置，如果没有找到s2,返回空指针
+10:char * strrchr(const char *s,int c);//该函数返回s字符串中c字符的最后一次出现的位置（末尾的空字符也是字符串的一部分，所以在查找范围内）。果未找到c字符，则返回空指针
+11:size_t strlen(const char* s);//返回s字符串中的字符数，不包括末尾的空字符
+关键字restrict该关键字限制了函数参数的用法。例如，不能把字符串拷贝给本身
+size_t类型是sizeof运算符返回的类型。C规定sizeof运
+算符返回一个整数类型，但是并未指定是哪种整数类型，所以size_t在一个
+系统中可以是unsigned int，而在另一个系统中可以是 unsigned long。string.h
+头文件针对特定系统定义了 size_t，或者参考其他有 size_t定义的头文件
+```
+-ctype.h字符函数和字符串
+> 这些函数用来处理字符，和字符串有一定的关系
+- 命令行参数
+> $fuccess.exe -r Color
+> 一个c程序可以读取并使用这些附加项
+```
+  1:c编译器允许mian()函数没有参数或者有两个参数（一些实现允许main()有更多参数，属于对标准的扩展），main()有两个参数时
+  第一个参数是命令行中的字符串数量，系统用空格表示一个字符串的结束和下一个字符串的开始，程序把命令行字符串存储在内存中，每个字符串的地址存储在指针数组中，
+  而该数组的地址则被存在main的第二个参数中，本质上来说，第二个参数是数组的指针，值就是一个地址值，指向数组的第一个地址，然后数组的第一个位置上的值指向内存中第一个参数值的地址
+  我们打印的时候其实%s其实就是打印这个参数值的地址，
+  char *arg[]与char **arg等价，即char是指针的指针
+
+```
+- 把字符串转化为数字
+> 
