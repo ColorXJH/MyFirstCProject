@@ -874,3 +874,10 @@ size_t类型是sizeof运算符返回的类型。C规定sizeof运
   atoi(),atol(),atof()把字符串形式的数字转换成相应的数字，strtol(),strtoul(),strtod()函数把字符串形式的数字转换为相应的数字类型
   
 ```
+### chapter12: 存储类别，链接和内存管理
+-本章要点
+> 关键字：auto extern static register const volatile restricted _Thread_local _Atomic
+> 函数：rand() srand() time() malloc() calloc() free()
+> 如何确定变量的作用域（可见的范围）和声明周期（它存在多长时间），
+> 程序员通过 C的内存管理系统指定变量的作用域和生命期，实现对程序的控制
+> 合理使用内存储存数据是设计程序的一个要点
