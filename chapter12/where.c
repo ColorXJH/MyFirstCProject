@@ -6,11 +6,13 @@
 #include <string.h>
 int static_store=30;
 const char* pcg="String Literal";
+void paly(void);
 int main(void){
     int auto_store=40;
     char auto_string []="Auto char array";
     int *pi;
     char *pcl;
+    paly();
     pi= (int *)malloc(sizeof (int));
     *pi=35;
     pcl=(char *) malloc(strlen("Dynamic String")+1);
@@ -26,4 +28,6 @@ int main(void){
     free(pcl);
     return 0;
 }
-
+void paly(void){
+    printf("%d\n",static_store);
+}
