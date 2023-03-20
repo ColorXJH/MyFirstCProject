@@ -1421,5 +1421,18 @@ atomic_store(&hogs,12);//原子赋值操作
       这里存在潜在得风险，所以最好是使用指针指向已经分配内存和在别处分配内存得字符串
     8：结构，指针和malloc()
       如果使用malloc()分配内存并使用指针存储该地址，那么在结构中使用指针就较为合理，因为可以请求malloc()
-      为字符串分配合适得存储空间，见代码 names.c     
+      为字符串分配合适得存储空间，见代码 names.c
+    9：复合字面量和结构
+      c99的复合字面量特性可用于结构和数组，如果只需要一个临时结构复合字面量很好用，例如，可以使用复合字面量创建一个数组作为函数
+      的参数或赋给另一个结构。语法是把类型名放在圆括号中，后面紧跟一个用
+      花括号括起来的初始化列表。例如，下面是struct book类型的复合字面量：
+      （struct book）{"first","last",99.8}  
+      还可以把复合字面量作为函数的参数。如果函数接受一个结构，可以把复合字面量作为实际参数传递：
+          struct rect {double x; double y;};
+          double rect_area(struct rect r){return r.x * r.y;}   
+          
+      如果函数接受一个地址，可以传递复合字面量的地址：
+      struct rect {double x; double y;};
+      double rect_areap(struct rect * rp){return rp->x * rp->y;}   
+      area = rect_areap( &(struct rect) {10.5, 20.0});   
 ```
