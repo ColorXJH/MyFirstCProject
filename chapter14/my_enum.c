@@ -65,10 +65,10 @@ char *s_gets(char *st,int n){
             i++;
         }
         if(st[i]=='\n'){
-            st[i]='\0';
+            st[i]='\0';//查找换行符并替换为空字符
         }else{
             while(getchar()!='\n'){
-                continue;
+                continue;//清理输入行
             }
         }
     }
