@@ -3,10 +3,19 @@
 // 使用位操作显示二进制
 #include <stdio.h>
 #include <limits.h>//提供char_bit的定义，char_bit表示每字节的位数
+struct {
+    unsigned int field1 :1;
+    unsigned int :2;//field1和field2之间，有一个2位空隙
+    unsigned int field2 :2;
+    unsigned int :0;//强制field3存储在下一个unsigned int中
+    unsigned int field3 :1;
+}stuff;
 char * itobs(int n,char *ps);
 void show_bstr(const char *str);
 int invert_end(int num,int bits);
 int main(void){
+    //求整个位的内存大小，占用了连哥哥int位置大小，使用一个宽度为0的未命名字段迫使下一个字段与下一个整数对齐
+    printf("this stuff bit is %d bytes\n",sizeof(stuff));
     //预留存储int类型的的字符数组的大小，+1代表最后的空字符'\0',不然无法成为字符串
     char bin_str[CHAR_BIT*sizeof (int)+1];
     int number;
