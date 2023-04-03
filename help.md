@@ -2121,5 +2121,102 @@ C11在stdlib.h库还添加了一个新的内存分配函数，用于对齐动态
           #else
           #include "std3.h"
           #endif
-          
+      较新的编译器提供另一种方式：#if defined(val) 代替#ifdef val
+        可以将它和elif 配合使用
+          #define val        
+          #if defined(max)
+          #include "max.h"
+          #elif defined(min)
+          #include "min.h"
+          #else
+          #include "else.h"
+          #endif    
+      一些预定义宏
+        __DATE__ 预处理的日期
+        __FILE__ 当前源代码文件的名字字符串字面量
+        __LINE__ 当前源代码文件中行号的整型常量
+        __STDC__ 设置为1时，表示实现遵循C标准
+        __STDC_HISTED__ 本机环境设置为1，或者0
+        __TIME__ 编译代码的时间    
+      #line与#error
+        #line指令用于重置__LINE__和__FILE__宏报告的行号和文件名，可以这样使用#line
+          #line 1000 //把当前行号重置为1000
+          #line 1000 "cool.c" //把当前行号重置为1000 并且将文件名重置为"cool.c"
+        #error让预处理器发出一条错误消息，该消息包含指令中的文本
+          #if __STDC_VERSION__!=201112L
+          #error NOT C11
+          #endif
+            $gcc newish.c
+              newish.c #error NOT C11
+            $gcc -std=c11 newish.c
+              ok
+      #pragma
+        现代编译器可以通过命令行参数或者ide菜单修改编译器的一些设置
+        #pragma把编译器指令当如源代码中，例如在开发c99时，标准被称为C9X,可以用下面的编译指数让编译器支持C9X
+          #pragma c9x on
+        其他功能：控制分配给自动变量的内存量   设置错误检查严格程度   启用非标准语言特性   
+        C99还提供了_Pragma预处理器运算符，用于把字符串转换为普通的编译指示
+          _Pragma("nonstandardtreatmenttypeB on")
+          等价于：
+          #pragma nostandardtreatmenttypeB on
+          _Pragma运算符完成“解字符串”的工作
+          _Pragma("use bool \"true\"false")
+          变成了：use bool "true"false
+      C11泛型选择表达式
+        可根据表达式的类型（即表达式的类型是double  还是其他类型）选择一个值，泛型选择表达式不是预处理器指令
+        但是一些泛型编程中它常作为#define宏定义的一部分
+        _Generic(x,int:0,float:1,double:2,default:3)
+          逗号分割项，第一项为x表达式，后面用于匹配，x是int则匹配第一项，以此类推，默认匹配3
+      内联函数
+        通常，函数调用都有一定的开销，因为函数的调用过程包括建立调用，传递参数，跳转到函数代码并返回。
+        使用宏使代码内联，可以避免这样的开销，或者使用内联函数：把函数变成内联函数建议尽可能块的调用该函数
+        其具体效果由实现定义
+          因此，使用内联函数，编译器可能会使用内联代码段替换函数，并执行一些优化，但也可能不起作用
+            内联函数有多种定义方法，标准规定具有内部链接的函数可以称为内联函数
+            内联函数的定义与调用该函数的代码必须在同一个文件中，因此最简单的方法是使用函数说明符inline和
+            存储类别说明符static,通常内联函数应定义在首次使用它的文件中，所以内联函数也相当于函数原型
+                #include <stdio.h>
+                inline static void eatline()//内联函数定义/原型
+                {
+                  while(getchar()!='\n'){
+                    continue;
+                  }
+                }   
+                int main(void){
+                ...
+                eatline();//函数调用
+                }   
+                
+                //由于并未给内联函数预留单独的代码块，所以无法获得内联函数的地址（实际上可以获得其地址，但是这样
+                编译其会生成一个非内联函数），内联函数无法在调试器中显示
+                
+                内联函数应该比较短小。把较长的函数变成内联并未节约多少时间，
+                因为执行函数体的时间比调用函数的时间长得多
+                
+                编译器优化内联函数必须知道该函数定义的内容。这意味着内联函数定义与函数调用必须在同一个文件中。
+                鉴于此，一般情况下内联函数都具有内部链接。因此，如果程序有多个文件都要使用某个内联函数，
+                那么这些文件中都必须包含该内联函数的定义。最简单的做法是，把内联函数定义放入头文件，
+                并在使用该内联函数的文件中包含该头文件即可   
+                    // eatline.h
+                    #ifndef EATLINE_H_
+                    #define EATLINE_H_
+                    inline static void eatline()
+                    {
+                    while (getchar() != '\n')
+                    continue;
+                    }
+                    #endif
+                如果省略inline的static,则可以被外部的公共函数定义替代，或者被自己内联替代
+                即：该定义被视为可替换的外部定义
+      _Noreturn函数(C11)
+        C99新增inline时是唯一的函数说明符，关键字extern和static是存储类别说明符，可应用于数据对象和函数
+        C11新增了第二个函数说明符：_Noreturn,表明调用完成后，函数不返回主调函数，exit()函数是_Noreturn函数的一个示例
+        与void不同，void返回主调函数，只是不提供返回值
 ```
+- C库
+> 1:访问C库：1：自动访问，2：文件包含 3：库包含
+> 另外，ANSI C把指向void的指针作为一种通用指针
+- 数学库
+- tgmath.h库
+- 
+
