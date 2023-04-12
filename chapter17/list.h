@@ -30,7 +30,7 @@ typedef Node *List; //定义一个List变量,List实质上是一个结构类型�
  * 前置条件：plist指向一个链表
  * 后置条件：链表初始化为空
  * */
-void InitializeList(List *plist);//想要传递结构指针，不能指定结构名，需要在前面加上地址符&
+void InitializeList(List *plist);//想要传递结构指针，不能指定结构名，需要在前面加上地址符&,  plist是Node(node)指针的指针
 /*
  * 操作：确定链表是否为空，plist指向一个已经初始化的链表
  * 后置条件：如果链表为空，该函数返回true,否则返回false
