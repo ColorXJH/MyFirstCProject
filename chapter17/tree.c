@@ -98,7 +98,7 @@ bool DeleteItem(const Item *pi,Tree *ptree){
         return false;
     }
     //找到了该项，但是该项是根节点（look.parent==NULL表明他是一个根节点，因为只有根节点没有parent）
-    //关于DeleteNode 删除节点，就是要修改被删除节点父节点的指针，所以该函数徐娅传递一个结点指针地址
+    //关于DeleteNode 删除节点，就是要修改被删除节点父节点的指针，所以该函数传递一个结点指针地址
     if(look.parent==NULL){
         DeleteNode(&ptree->root);//删除根节点
     }else if(look.parent->left==look.child){//待删除的节点是其父节点的左子节点
@@ -106,20 +106,22 @@ bool DeleteItem(const Item *pi,Tree *ptree){
     }else{//待删除的节点是其父节点的右子节点
         DeleteNode(&look.parent->right);
     }
+    //维护树的大小
     ptree->size--;
     return true;
 }
-//树每一项应用函数
+//树每一项应用函数（遍历）
 void Traverse(const Tree *ptree,void(*pfun)(Item item)){
     if(ptree!=NULL){
         InOrder(ptree->root,pfun);
     }
 }
-//树清空项
+//树清空项（和遍历树类似，也要访问每个节点，然后free释放内存）
 void DeleteAll(Tree *ptree){
     if(ptree!=NULL){
         DeleteAllNodes(ptree->root);
     }
+    //重置Tree类型结构的成员
     ptree->root=NULL;
     ptree->size=0;
 }
@@ -185,11 +187,14 @@ static void AddNode(Trnode *new_node,Trnode *root){
         exit(1);
     }
 }
-
+//遍历树（每个节点都有两个分支，可以使用分而治之的递归思想处理）
 static void InOrder(const Trnode *root,void(*pfun)(Item item)){
     if(root!=NULL){
+        //处理左子树（递归调用）
         InOrder(root->left,pfun);
+        //处理节点中的项
         (*pfun)(root->item);
+        //处理右子树（递归调用）
         InOrder(root->right,pfun);
     }
 }
@@ -249,16 +254,21 @@ static Pair SeekItem2(const Item *pi,Trnode *root,Pair * look){
         return *look;
     }
 }
-//删除节点，由于要修改指针（修改当前节点的父节点的指向位置），
+//删除节点，由于要修改指针（把指针的地址传递给删除任务的函数），
 //所以参数是指针的地址（指向Trnode的指针*ptr的地址==》**ptr），即指针的指针
 static void DeleteNode(Trnode **ptr){
-    //ptr是指向目标节点的父节点指针成员的地址
+    //ptr是指向目标节点的父节点指针成员（左右节点）的地址
+    //（即：&left代表左右节点本身的地址，但是*left代表该地址上存储的地址值，这个值就是子节点指针的地址，这个子节点上有数据和其他子节点指针，以此类推）
     Trnode *temp;
-    if((*ptr)->left==NULL){ //如果当前节点没有左子节点
+    //从下面就可以看出
+    //ptr代表当前节点指针在父节点中对应的地址值，它存储为父节点的某个子结点（左右子节点）的地址，
+    //*ptr则表示这个子节点的地址上面对应的值，这个值就是下一个节点的引用（也就是下一个节点的指针，即下一个节点的地址），指向子节点
+    //**otr则是这个子节点地址上面对应的值，也就是Trnode节点本身
+    if((*ptr)->left==NULL){ //如果当前节点没有左子节点，注意：（无子节点可以作为该类的一个特例）
         //存储当前节点
         temp=*ptr;
-        //当前节点的引用更新为其右子节点，
-        *ptr=(*ptr)->right;
+        //当前节点的引用更新为其右子节点，注意：（如果该节点也没有右子节点，则该指针为NULL。这就是无子节点情况的值）
+        *ptr=(*ptr)->right;//这句话什么意思呢：就是原来指向ptr的指针地址，现在指向ptr右子节点上去了，ptr本身内存空了出来，被一个临时指针地址引用，方便后面释放内存
         //释放当前节点的内存引用
         free(temp);
     }else if((*ptr)->right==NULL){//如果当前节点没有右子节点
@@ -269,22 +279,33 @@ static void DeleteNode(Trnode **ptr){
         free(temp);
     }else{//被删除的节点有两个子节点
         //找到重新链接右子树的位置
+        //循环的意思如下：在for循环中通过temp指针从左子树的右半部分向下查找一个空位。找到空位后，把右子树连接于此
+        //1:temp=(*ptr)->left 通过temp指针从左子树开始，
+        //2:temp->right!=NULL ; temp=temp->right 找这个左子树的右半部分，知道右半部分最末尾
         for (temp=(*ptr)->left; temp->right!=NULL ; temp=temp->right) {
             continue;
         }
+        //找到了这个空位，循环结束后temp指向左子树的右半部分的最末尾，现在将原来节点的右子树放在该空位上（这个空位就是最右边节点的下一个右指针空位）
         temp->right=(*ptr)->right;
+        //temp保存被删除节点的位置，地址引用
         temp=*ptr;
+        //将原来被删除节点的左子树链接到被删除节点的父节点上，因为*ptr代表的就是父节点中子节点指针的地址值，将它对应的地址从原来的子节点，跳转到子节点的左节点上
         *ptr=(*ptr)->left;
+        //回收该节点的内存
         free(temp);
     }
 }
-//删除树的所有节点
+//删除树的所有节点（递归调用，分而治之）
 static void DeleteAllNodes(Trnode *root){
     Trnode *pright;
     if(root!=NULL){
+        //保存右子树引用
         pright=root->right;
+        //递归调用左子树
         DeleteAllNodes(root->left);
+        //释放内存
         free(root);
+        //递归调用右子树
         DeleteAllNodes(pright);
     }
 }
